@@ -3,6 +3,7 @@
 from D import *
 from C import * #line is added by Teammember C
 def function_CD():
-    print ("CD")
     function_C()
     function_D()
+    print ("CD")
+    
