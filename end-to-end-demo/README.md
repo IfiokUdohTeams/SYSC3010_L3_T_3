@@ -10,7 +10,8 @@ On initialization of a Node Object N, N polls the ThingSpeak Channel(TSC) used i
 N can also write to TSC specifying the reciever and data which wich must be formated to Ns specification based on Communication Protocol table.
 NOTE: All nodes in the system should use the same TSC for communication to be possible
 
-Contributing
+Contributing:
+To contribute, clone repository and make your own branch
 
 ToDo:
 1.Fix bug to properly close threads reading from TSC
