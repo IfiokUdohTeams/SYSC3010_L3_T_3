@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">COVID-19 Laboratory Monitoring System</string>
+    <string name="header"></string>
+    <string name="headquarters">Headquarters</string>
+    <string name="Lab1">Lab #1</string>
+    <string name="Lab2">Lab #2</string>
+    <color name="blue">#89CFF0</color>
+    <string name="temp_threshold">" "</string>
+    <string name="pressure_threshold">" "</string>
+    <string name="change_temp">" "</string>
+    <string name="change_pressure">" "</string>
+    <string name="correct_state">Correct State?</string>
+    <string name="temp_title">Change temperature by:</string>
+    <string name="pressure_title">Change pressure by:</string>
+    <string name="temp_set">Temperature Threshold:</string>
+    <string name="pressure_set">Pressure Threshold:</string>
+
+</resources>
