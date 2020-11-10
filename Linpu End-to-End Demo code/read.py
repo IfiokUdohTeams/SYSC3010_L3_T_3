@@ -6,6 +6,7 @@ import json
 import random
 import write
 import time
+import unittest
 # Define a function that will read the server 
 t=[]
 u=[]
@@ -30,15 +31,7 @@ def read_temp():
         
     print t
     
-if __name__ == '__main__':
-    for x in range(10):
-        time.sleep(15)
-        write.temperature()
-    read_temp()
-    
-    if write.tempA == t:
-        print("pass")    
-    else: print("fail")
+
 
 def read_pres():
     URL='https://api.thingspeak.com/channels/1224062/feeds.json?api_key=WHM1IEG6FTN1XOEG&results=10'
@@ -59,12 +52,3 @@ def read_pres():
         u.append(y['field2'])
         
     print u
-if __name__ == '__main__':
-        for x in range(10):
-            time.sleep(15)
-            write.pressure()
-        read_pres()
-        
-        if write.presA == u:
-            print("pass")    
-        else: print("fail")
