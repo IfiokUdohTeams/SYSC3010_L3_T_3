@@ -19,6 +19,7 @@ class Node(object):
         self.processThread = ''
         self.mutex = threading.Lock()
         self.threads = []
+        self.run = True
        
         self.node_id = node_id
         self.read_data_pointer = pointer(c_wchar_p(""))
@@ -40,7 +41,7 @@ class Node(object):
 
     #Synchronixes readThinkchannel with processing data
     def synchronize(self):
-        while(True):
+        while(self.run):
             self.mutex.acquire()
             if self.read_data_pointer[0] != "":
                 self.process_data()
@@ -58,8 +59,7 @@ class Node(object):
     
     #used to format in specific node format
     def FormatData(self,receiver,data):
-        self.field1(receiver)
-        self.write_data = [self.field1(self.node_id),data]
+        self.write_data = [self.field1(receiver),data]
 
     def write(self):
         responeData = ''
@@ -82,6 +82,9 @@ class Node(object):
             time.sleep(5)
         
         
+    def close(self):
+        self.run = False
+        self.channelReader.close()
 
 
 # hq = Node('https://api.thingspeak.com/channels/1161330/feeds.json?',0, "OEGCYO9F8FJCZGO6", 'headquaters')

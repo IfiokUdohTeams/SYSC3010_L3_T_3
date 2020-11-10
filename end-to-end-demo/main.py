@@ -1,12 +1,7 @@
 import Headquaters
 import RemotePatientLab
 import RemoteVaccineLab
-import signal
-import sys
 
-def signal_handler(sig, frame):
-    print('Stopped all Processes reading from TSC')
-    sys.exit(0)
 
 def main():
     TSC = 'https://api.thingspeak.com/channels/1161330/feeds.json?'
@@ -14,9 +9,17 @@ def main():
     writeKey = "OEGCYO9F8FJCZGO6"
     hq = Headquaters.Headquaters(TSC,readKey, writeKey)
     rpl = RemotePatientLab.RemotePatientLab(TSC,readKey, writeKey)
+    writeData = "testing1"
+    readData = ""
+    hq.Format_and_Write(hq.node_id, writeData)
 
-
-    hq.Format_and_Write(hq.node_id, "testing1")
+    while(readData == ""):
+        readData = hq.getReadBack()
+        
+    hq.readBackDiscard()
+    print("Test result:", writeData == readData)
+    hq.close()
+    rpl.close()
     # hq.Format_and_Write(rpl.node_id, "testing2")
 
 if __name__ == '__main__':

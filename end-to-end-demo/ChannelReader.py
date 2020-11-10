@@ -22,10 +22,11 @@ class ChannelReader:
         self.sender_pointer = sender_pointer
         self.poll_thread = ""
         self.mutex = mutex
+        self.run = True
 
 
     def read_data_thingspeak(self):
-        while(True):
+        while(self.run):
             get_data=requests.get(self.channel_url).json()
             current_last_entry_id = get_data['channel']['last_entry_id']
 
@@ -49,6 +50,9 @@ class ChannelReader:
     def poll(self):
         self.poll_thread = threading.Thread(target=self.read_data_thingspeak,)
         self.poll_thread.start()
+
+    def close(self):
+        self.run = False
 
        
 
