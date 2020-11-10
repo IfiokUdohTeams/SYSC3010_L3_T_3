@@ -14,5 +14,7 @@
     <string name="pressure_title">Change pressure by:</string>
     <string name="temp_set">Temperature Threshold:</string>
     <string name="pressure_set">Pressure Threshold:</string>
+    <string name="IP">Server</string>
+    <string name="Port">Server</string>
 
 </resources>
