@@ -1,8 +1,6 @@
 from random import randint
 import unittest
-import sys
 import time
-sys.path.insert(1, '/home/ifiok/github/SYSC3010_L3_T_3/end-to-end-demo')
 import Headquaters
 import RemotePatientLab
 import RemoteVaccineLab
