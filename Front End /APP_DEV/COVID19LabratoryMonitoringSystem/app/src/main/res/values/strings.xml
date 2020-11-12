@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">COVID-19 Laboratory Monitoring System</string>
+    <string name="header"></string>
+    <string name="headquarters">Headquarters</string>
+    <string name="Lab1">Lab #1</string>
+    <string name="Lab2">Lab #2</string>
+    <color name="blue">#89CFF0</color>
+    <string name="temp_threshold">" "</string>
+    <string name="pressure_threshold">" "</string>
+    <string name="change_temp">" "</string>
+    <string name="change_pressure">" "</string>
+    <string name="correct_state">Correct State?</string>
+    <string name="temp_title">Change temperature by:</string>
+    <string name="pressure_title">Change pressure by:</string>
+    <string name="temp_set">Temperature Threshold:</string>
+    <string name="pressure_set">Pressure Threshold:</string>
+    <string name="IP">Server</string>
+    <string name="Port">Server</string>
+
+
+    <string name="temp_thresholdL2">" "</string>
+    <string name="pressure_thresholdL2">" "</string>
+    <string name="change_tempL2">" "</string>
+    <string name="change_pressureL2">" "</string>
+    <string name="correct_stateL2">Correct State?</string>
+    <string name="temp_titleL2">Change temperature by:</string>
+    <string name="pressure_titleL2">Change pressure by:</string>
+    <string name="temp_setL2">Temperature Threshold:</string>
+    <string name="pressure_setL2">Pressure Threshold:</string>
+
+
+    <string name="HQ_temp">Set the Temperature Threshold for the Labs:</string>
+    <string name="HQ_pressure">Set the Pressure Threshold for the Labs:</string>
+    <string name="HQ_setPressure">" "</string>
+    <string name="HQ_setTemperature">" "</string>
+    <string name="submit">Submit</string>
+
+</resources>

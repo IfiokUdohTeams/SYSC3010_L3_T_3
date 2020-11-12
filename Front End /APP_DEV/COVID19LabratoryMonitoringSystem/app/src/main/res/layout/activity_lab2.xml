@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    tools:context=".lab2">
+
+
+    <Button
+        android:id="@+id/buttonL2"
+        android:layout_width="139dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/correct_stateL2"
+        app:layout_constraintBottom_toTopOf="@+id/PChangeL2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.121" />
+
+    <EditText
+        android:id="@+id/changepressureL2"
+        android:layout_width="225dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="#D3D3D3"
+        android:ems="10"
+        android:enabled="false"
+        android:hint="@string/change_pressureL2"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PChangeL2" />
+
+    <EditText
+        android:id="@+id/changetempL2"
+        android:layout_width="225dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="#D3D3D3"
+        android:ems="10"
+        android:enabled="false"
+        android:hint="@string/change_tempL2"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TchangeL2" />
+
+    <EditText
+        android:id="@+id/pressurethreshL2"
+        android:layout_width="225dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="#D3D3D3"
+        android:ems="10"
+        android:enabled="false"
+        android:hint="@string/pressure_thresholdL2"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PSetL2" />
+
+    <EditText
+        android:id="@+id/tempthreshL2"
+        android:layout_width="225dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="68dp"
+        android:background="#D3D3D3"
+        android:ems="10"
+        android:enabled="false"
+        android:hint="@string/temp_thresholdL2"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TSetL2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/PChangeL2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/pressure_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonL2" />
+
+    <TextView
+        android:id="@+id/TchangeL2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/temp_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changepressureL2" />
+
+    <TextView
+        android:id="@+id/PSetL2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/pressure_set"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changetempL2" />
+
+    <TextView
+        android:id="@+id/TSetL2"
+        android:layout_width="148dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/temp_set"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pressurethreshL2" />
+</androidx.constraintlayout.widget.ConstraintLayout>

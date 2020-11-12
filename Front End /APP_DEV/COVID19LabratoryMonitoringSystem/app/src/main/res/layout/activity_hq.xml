@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    tools:context=".hq">
+
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="139dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HQ_T_Threshold"
+        app:layout_constraintVertical_bias="0.297" />
+
+    <EditText
+        android:id="@+id/HQ_P_Threshold"
+        android:layout_width="225dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="36dp"
+        android:background="#D3D3D3"
+        android:ems="10"
+        android:enabled="true"
+        android:hint="@string/HQ_setPressure"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HQ_PTitle" />
+
+    <EditText
+        android:id="@+id/HQ_T_Threshold"
+        android:layout_width="225dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="#D3D3D3"
+        android:ems="10"
+        android:enabled="true"
+        android:hint="@string/HQ_setTemperature"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HQ_Ttitle" />
+
+    <TextView
+        android:id="@+id/HQ_Ttitle"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginTop="120dp"
+        android:text="@string/HQ_temp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/HQ_P_Threshold" />
+
+    <TextView
+        android:id="@+id/HQ_PTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginTop="112dp"
+        android:text="@string/HQ_pressure"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
