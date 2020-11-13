@@ -10,7 +10,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[192.168.2.83:5555]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -20,6 +20,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="ProjectId" id="1kDWReh1S5UQWHamEzYIqdGWX6W" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -110,6 +111,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="401" y="48" key="#app" timestamp="1605237338353">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="401" y="48" key="#app/0.0.1440.900@0.0.1440.900" timestamp="1605237338353" />
     <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1605236507712">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
