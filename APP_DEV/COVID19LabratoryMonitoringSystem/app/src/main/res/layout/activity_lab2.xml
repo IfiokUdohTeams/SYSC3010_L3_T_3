@@ -8,33 +8,33 @@
     tools:context=".lab2">
 
     <TextView
-        android:id="@+id/tvIP"
+        android:id="@+id/myIP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="75dp"
         android:text="@string/IP"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
 
-        app:layout_constraintStart_toStartOf="@+id/tvConnectionStatus"
+        app:layout_constraintStart_toStartOf="@+id/myConnectionStatus"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
-        android:id="@+id/tvPort"
+        android:id="@+id/myPort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvIP"
+        android:layout_below="@+id/myIP"
         android:layout_marginTop="60dp"
         android:text="@string/Port"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toStartOf="@+id/tvIP"
+        app:layout_constraintStart_toStartOf="@+id/myIP"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvConnectionStatus"
+        android:id="@+id/myConnectionStatus"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPort"
+        android:layout_below="@+id/myPort"
         android:layout_marginTop="45dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,21 +43,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvMessages"
+        android:id="@+id/recvMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/etMessage"
-        android:layout_below="@+id/tvConnectionStatus"
+        android:layout_above="@+id/messageToSend"
+        android:layout_below="@+id/myConnectionStatus"
         android:layout_marginTop="30dp"
         android:inputType="textMultiLine"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvConnectionStatus" />
+        app:layout_constraintTop_toBottomOf="@+id/myConnectionStatus" />
 
     <EditText
-        android:id="@+id/etMessage"
+        android:id="@+id/messageToSend"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnSend"
@@ -79,6 +79,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etMessage" />
+        app:layout_constraintTop_toBottomOf="@+id/messageToSend" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
