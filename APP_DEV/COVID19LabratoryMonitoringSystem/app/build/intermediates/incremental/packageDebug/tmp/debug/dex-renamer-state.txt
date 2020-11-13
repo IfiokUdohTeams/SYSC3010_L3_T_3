@@ -1,0 +1,4 @@
+#Thu Nov 12 21:58:30 EST 2020
+base.0=/Users/zoyamushtaq/Documents/GitHub/SYSC3010_L3_T_3/APP_DEV/COVID19LabratoryMonitoringSystem/app/build/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
