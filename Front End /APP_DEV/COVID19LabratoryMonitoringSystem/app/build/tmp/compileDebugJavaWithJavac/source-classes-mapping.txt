@@ -1,0 +1,13 @@
+com/example/covid_19labratorymonitoringsystem/hq.java
+ com.example.covid_19labratorymonitoringsystem.hq
+ com.example.covid_19labratorymonitoringsystem.hq$1
+com/example/covid_19labratorymonitoringsystem/MainActivity.java
+ com.example.covid_19labratorymonitoringsystem.MainActivity
+com/example/covid_19labratorymonitoringsystem/BuildConfig.java
+ com.example.covid_19labratorymonitoringsystem.BuildConfig
+com/example/covid_19labratorymonitoringsystem/Lab1.java
+ com.example.covid_19labratorymonitoringsystem.Lab1
+ com.example.covid_19labratorymonitoringsystem.Lab1$1
+com/example/covid_19labratorymonitoringsystem/lab2.java
+ com.example.covid_19labratorymonitoringsystem.lab2
+ com.example.covid_19labratorymonitoringsystem.lab2$1
