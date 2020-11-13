@@ -4,21 +4,28 @@ import unittest
 class Test_rpi_app_client(unittest.TestCase):
 
     def test_app_client(self):
-        host = socket.gethostname()  # as both code is running on same pc
-        host = '192.168.0.52'
+        # host = socket.gethostname()  # as both code is running on same pc
+        # host = '192.168.0.52'
+        host = '192.168.0.45'
         port = 8080  # socket server port number
 
         client_socket = socket.socket()  # instantiate
         client_socket.connect((host, port))  # connect to the server
+        # tcp_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # tcp_client.connect((host, port))  # connect to the server
+
+        
         recvList = ""
         cond = True
         while(cond):
-            data = client_socket.recv(1024).decode()  # receive response
+            # data = client_socket.recv(1024).decode()  # receive response
+            data = tcp_client.recv(1024).decode()  # receive response
             print('Received from server: ' + data)  # show in terminal
             recvList = data
             cond = False
 
         client_socket.close()  # close the connection
+        # tcp_client.close()  # close the connection
         recvList = recvList.encode("ascii").split(", ")
         data = []
         for i in recvList:

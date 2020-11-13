@@ -3,63 +3,63 @@
 # date: Nov 12 2020
 # name: Zoya Mushtaq
 # description: Remote Patient Lab set up
-class Patient
+class Patient:
 
-string Name
-Integer Age
-String Gender
-Integer Temperature
+    self.Name
+    self.Age
+    self.Gender
+    self.Temperature
 
-#define setTemperature function
-def setTemperature(temperature: Integer)
-this.temperature=Temperature
-
-
-#define getTemperature function
-def getTemperature()
-    Temperature = sense.get_temperature()
-
-#define setName function
-def setName(name: String)
-this.name=Name
-
-#define getName function
-def getName()
-return Name
-
-#define setAge function
-def setAge()
-this.age=Age
-
-#define getAge function
-def getAge()
-return Age 
-
-#define setGender function
-def setGender(gender: String)
-this.gender=Gender
-
-#define getGender function
-def getGender()
-return Gender
-
-class RPL
-
-String Name
-Integer Age
-Integer tempThreshold
+    #define setTemperature function
+    def setTemperature(self, Integer):
+        this.temperature=Temperature
 
 
+    #define getTemperature function
+    def getTemperature(self):
+        Temperature = sense.get_temperature()
+
+    #define setName function
+    def setName(self,name):
+        this.name = name
+
+    #define getName function
+    def getName(self):
+        return self.Name
+
+    #define setAge function
+    def setAge(self,Age):
+        self.age = Age
+
+    #define getAge function
+    def getAge():
+        return self.Age 
+
+    #define setGender function
+    def setGender(self, gender):
+        self.gender=gender
+
+    #define getGender function
+    def getGender(self):
+        return self.Gender
+
+class RPL:
+
+    self.Name
+    self.Age
+    self.tempThreshold
 
 
 
 
-class Thermal_Camera
-Integer temperature
-
-def setTemp(temp: Integer)
-this.temp=temperature
 
 
-def getTemp()
-return temperature 
+class Thermal_Camera:
+    self.temperature
+
+    def setTemp(self,temperature):
+        self.temperature=temperature
+
+
+    def getTemp(self):
+    return self.temperature 
