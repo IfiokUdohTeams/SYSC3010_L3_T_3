@@ -54,12 +54,3 @@ class RPL:
 
 
 
-class Thermal_Camera:
-    self.temperature
-
-    def setTemp(self,temperature):
-        self.temperature=temperature
-
-
-    def getTemp(self):
-    return self.temperature 
