@@ -3,12 +3,12 @@
 # name: Harshil Verma                                                                                                         #
 # description: This class file contians methods for getting and setting temperature values. IMPORTS: RVLClass & SenseHatClass #
 
-
-import RVLClass
 import SenseHatClass
 
 class Vaccine():
-    
+    def __init__(self):
+        self.temperature = ""
+        self.pressure = ""
    
     
     def setTemperature(self, temp):
