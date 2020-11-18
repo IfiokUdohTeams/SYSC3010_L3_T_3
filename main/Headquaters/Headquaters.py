@@ -3,6 +3,7 @@ sys.path.append('..')
 from Communication import Node
 import socket
 import threading 
+import sqlite3
 
 class Headquaters(Node.Node):
     def __init__(self, thingSpeak_url, readKey, writeKey):
@@ -10,7 +11,7 @@ class Headquaters(Node.Node):
         self.host = '192.168.0.52'
         self.port = 8080
         self.socket = socket.socket()  # instantiate
-        self.socket.connect((self.host, self.port))
+        # self.socket.connect((self.host, self.port))
         self.socket.setblocking(0)
         print("connected!")
         self.recvThread = ""
@@ -19,8 +20,11 @@ class Headquaters(Node.Node):
         self.tempThreshold = ""
         self.vaccineLabTemp = ""
         self.vaccineLabPress = ""
+        self.patientTemp = ""
         self.done = False
         self.ReadList = []
+        self.ReadCnt = 0
+        self.dbconnect = ""
 
 
     def process_data(self):
@@ -40,9 +44,32 @@ class Headquaters(Node.Node):
             self.vaccineLabTemp = data[0].split(":")[1]
             self.vaccineLabPress = data[1].split(":")[1]
             self.done = True
+        # elif(self.read_sender_pointer[0] == "remotePatientLab"):
+        #     a =  self.read_data_pointer[0]
+        #     print("here5")
+        #     print(a)
+        #     self.ReadList.append(int(a.encode("ascii")))
+        #     self.ReadCnt += 1
+        #     if self.ReadCnt == 9:
+        #          self.done = True
         elif(self.read_sender_pointer[0] == "remotePatientLab"):
-            a =  self.read_data_pointer[0]
-            self.ReadList.append(int(a.encode("ascii")))
+            rawdata = self.read_data_pointer[0]
+            data = rawdata.split(",")
+            if data[0] == "end":
+                print("here5")
+                self.ReadList.append(int(data[1]))
+                self.ReadCnt += 1
+                if self.ReadCnt == 9:
+                    self.done = True
+            else:
+                print(data)
+                print("hereRPL")
+                self.patientTemp = data[3].split(":")[1]
+                # self.vaccineLabPress = data[1].split(":")[1]
+                # self.done = True
+                self.writeToThresholdDatabase()
+                self.Format_and_Write("remotePatientLab", "recievedNewPatient")
+
 
 
 
@@ -78,6 +105,54 @@ class Headquaters(Node.Node):
 
     def writeToThresholdDatabase(self):
         pass
+
+    def createDatabase(self):
+        self.dbconnect = sqlite3.connect("test.db");
+        #row_factory to sqlite3.ROw class
+        self.dbconnect.row_factory = sqlite3.Row;
+        #now we create a cursor to work with db
+        cursor = self.dbconnect.cursor();
+        #execute insetr statement
+        cursor.execute('''create table if not exists entries(temperature Integer)''');
+
+        #close the connection
+        self.dbconnect.close();
+
+    def addToDataBase(self, value):
+        self.dbconnect = sqlite3.connect("test.db");
+
+        cursor = self.dbconnect.cursor();
+        data = str(value)
+        cursor.execute('''insert into entries values (?)''',(data,));
+        self.dbconnect.commit();
+        self.dbconnect.close();
+    
+    def getDBEntriesCnt(self):
+        self.dbconnect = sqlite3.connect("test.db");
+
+        cursor = self.dbconnect.cursor();
+        #execute simple select statement
+        cursor.execute('SELECT * FROM entries');
+        #print data
+        cnt = 0
+        for row in cursor:
+            # print(str(row['temperature']));
+            print(str(row[0]));
+            cnt += 1
+        
+        #close the connection
+        self.dbconnect.close();
+        return cnt
+
+    def clearDB(self):
+        self.dbconnect = sqlite3.connect("test.db");
+
+        cursor = self.dbconnect.cursor();
+        # #clear Databases
+        cursor.execute('DELETE FROM entries');
+        self.dbconnect.commit()
+        self.dbconnect.close();
+
 
     def closeAll(self):
         self.close()

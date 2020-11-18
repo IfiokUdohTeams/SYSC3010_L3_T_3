@@ -30,7 +30,7 @@ class TestLabData(unittest.TestCase):
                 self.assertEqual(int(remoteVaccinelab.PressureThreshold), 10)
                 self.assertEqual(int(remoteVaccinelab.TempThreshold), 20)
                 self.assertEqual(int(headquaters.pressThreshold), int(remoteVaccinelab.PressureThreshold))
-                self.assertEqual(int(headquaters.tempThreshold), int(remoteVaccinelab.tempThreshold))
+                self.assertEqual(int(headquaters.tempThreshold), int(remoteVaccinelab.TempThreshold))
                     
 
 

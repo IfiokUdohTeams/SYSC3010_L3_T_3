@@ -15,9 +15,9 @@ remotepatientlab = RemotePatientLab.RemotePatientLab(TSC,readKey, writeKey)
 temperature_pressure = []
 for x in range(10):
         #Generate 10 random readings
-        temperature_pressure.append(i)
+        temperature_pressure.append(x)
 
 for data in temperature_pressure:
-        remotepatientlab.Format_and_Write("headquaters", data) #send data from Remote patient lab to Headquaters
+        remotepatientlab.Format_and_Write("headquaters","end" + "," + str(data)) #send data from Remote patient lab to Headquaters
 
 remotepatientlab.close()

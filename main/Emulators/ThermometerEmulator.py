@@ -2,7 +2,7 @@ import ThermalSensor
 
 class ThermometerEmulator(ThermalSensor.ThermalSensor):
     def __init__(self):
-        super(ThermometerEmulator, self).__init__(14,30)
+        super(ThermometerEmulator, self).__init__(17,25)
 
 # def main():
 #     thermo = ThermometerEmulator()
