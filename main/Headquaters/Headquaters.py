@@ -7,13 +7,12 @@ import sqlite3
 
 class Headquaters(Node.Node):
     def __init__(self, thingSpeak_url, readKey, writeKey):
+        self.createDBs()
         super(Headquaters, self).__init__(thingSpeak_url, readKey, writeKey,"headquaters")
-        self.host = '192.168.0.52'
-        self.port = 8080
-        self.socket = socket.socket()  # instantiate
-        # self.socket.connect((self.host, self.port))
-        self.socket.setblocking(0)
-        print("connected!")
+        self.socket = socket.socket()  # instantiate socket for connecting to Android APP
+
+
+
         self.recvThread = ""
         self.cond = True
         self.pressThreshold = ""
@@ -27,51 +26,74 @@ class Headquaters(Node.Node):
         self.dbconnect = ""
 
 
+    def ConnectToAndroidApp(self):
+        self.host = '192.168.0.52'
+        self.port = 8080
+        self.socket.connect((self.host, self.port))
+        print("connected!")
+        self.socket.setblocking(0)
+
     def process_data(self):
-        # print("headquaters READ: ", self.read_data_pointer[0].encode("ascii"), " from: ", self.read_sender_pointer[0])
-        # a =  self.read_data_pointer[0]
-        # self.ReadList.append(int(a.encode("ascii"))) # encode read unicode string to ascii and convert to integer
         if(self.pressThreshold != "" and self.tempThreshold != ""):
-            self.writeToThresholdDatabase()
-            self.Format_and_Write("remoteVaccineLab", self.pressThreshold + "," + self.tempThreshold)
+            print("headquaters READ: " +  self.pressThreshold + " " + self.tempThreshold + " from: Android APP")
+            self.Format_and_Write("remoteVaccineLab1", self.pressThreshold + "," + self.tempThreshold)
+            self.Format_and_Write("remoteVaccineLab2", self.pressThreshold + "," + self.tempThreshold)
+            self.addToThresholdDB(float(self.pressThreshold), float(self.tempThreshold))
             self.pressThreshold = ""
             self.tempThreshold = ""
-        elif(self.read_sender_pointer[0] == "remoteVaccineLab"):
+
+        elif(self.read_sender_pointer[0] == "remoteVaccineLab1"): #process data from vaccineLab
+            print("headquaters READ: ", self.read_data_pointer[0].encode("ascii"), " from: ", self.read_sender_pointer[0])
             rawdata = self.read_data_pointer[0]
             data = rawdata.split(",")
             print(data)
-            print("here")
+            
+            time                                    = int(data[0].split(":")[1])
+            self.vaccineLabTemp                     = float(data[1].split(":")[1])
+            self.vaccineLabPress                    = float(data[2].split(":")[1])
+            Current_Temperature_threshold           = float(data[3].split(":")[1])
+            Current_Pressure_threshold              = float(data[4].split(":")[1])
             self.vaccineLabTemp = data[0].split(":")[1]
             self.vaccineLabPress = data[1].split(":")[1]
             self.done = True
-        # elif(self.read_sender_pointer[0] == "remotePatientLab"):
-        #     a =  self.read_data_pointer[0]
-        #     print("here5")
-        #     print(a)
-        #     self.ReadList.append(int(a.encode("ascii")))
-        #     self.ReadCnt += 1
-        #     if self.ReadCnt == 9:
-        #          self.done = True
-        elif(self.read_sender_pointer[0] == "remotePatientLab"):
+            self.addToRVL1DB(time, self.vaccineLabTemp, self.vaccineLabPress, Current_Temperature_threshold, Current_Pressure_threshold)
+
+        elif(self.read_sender_pointer[0] == "remoteVaccineLab2"): #process data from vaccineLab
+            print("headquaters READ: ", self.read_data_pointer[0].encode("ascii"), " from: ", self.read_sender_pointer[0])
             rawdata = self.read_data_pointer[0]
             data = rawdata.split(",")
-            if data[0] == "end":
-                print("here5")
+            print(data)
+
+            time                                    = int(data[0].split(":")[1])
+            self.vaccineLabTemp                     = float(data[1].split(":")[1])
+            self.vaccineLabPress                    = float(data[2].split(":")[1])
+            Current_Temperature_threshold           = float(data[3].split(":")[1])
+            Current_Pressure_threshold              = float(data[4].split(":")[1])
+            self.vaccineLabTemp = data[0].split(":")[1]
+            self.vaccineLabPress = data[1].split(":")[1]
+            self.done = True
+            self.addToRVL2DB(time, self.vaccineLabTemp, self.vaccineLabPress, Current_Temperature_threshold, Current_Pressure_threshold)
+        
+        elif(self.read_sender_pointer[0] == "remotePatientLab"): #process data from patientLab
+            print("headquaters READ: ", self.read_data_pointer[0].encode("ascii"), " from: ", self.read_sender_pointer[0])
+            rawdata = self.read_data_pointer[0]
+            data = rawdata.split(",")
+            if data[0] == "end":                                #end-to-end demo
                 self.ReadList.append(int(data[1]))
                 self.ReadCnt += 1
                 if self.ReadCnt == 9:
                     self.done = True
             else:
-                print(data)
-                print("hereRPL")
-                self.patientTemp = data[3].split(":")[1]
-                # self.vaccineLabPress = data[1].split(":")[1]
-                # self.done = True
+                time                                    = int(data[0].split(":")[1])
+                name                                    = data[1].split(":")[1]
+                age                                     = int(data[2].split(":")[1])
+                gender                                  = data[3].split(":")[1]
+                self.patientTemp                        = float(data[4].split(":")[1])
+                Current_Temperature_threshold           = float(data[5].split(":")[1])
+                self.writeToPatientDatabase()
                 self.writeToThresholdDatabase()
                 self.Format_and_Write("remotePatientLab", "recievedNewPatient")
-
-
-
+                self.addToRPLDB(time, name, age, gender, self.patientTemp, Current_Temperature_threshold)
 
     def RcvAppData(self):
         rawdata = ""
@@ -81,13 +103,12 @@ class Headquaters(Node.Node):
             except socket.error:
                 pass
             
-            # print("here1")
             if rawdata != "":
                 data = rawdata.split(",")
                 print(data)
                 opcode = data[0]
                 if opcode == "S":
-                    print("here")
+
                     self.pressThreshold = data[1].split(":")[1]
                     self.tempThreshold = data[2].split(":")[1]
                     self.process_data()
@@ -101,57 +122,110 @@ class Headquaters(Node.Node):
         self.socket.close()
         self.cond = False
         print("closed")
-        
 
-    def writeToThresholdDatabase(self):
-        pass
-
-    def createDatabase(self):
-        self.dbconnect = sqlite3.connect("test.db");
+    def createRVLDatabase(self):
+        self.dbconnect = sqlite3.connect("RVL.db");
         #row_factory to sqlite3.ROw class
         self.dbconnect.row_factory = sqlite3.Row;
         #now we create a cursor to work with db
         cursor = self.dbconnect.cursor();
-        #execute insetr statement
-        cursor.execute('''create table if not exists entries(temperature Integer)''');
+        #execute insert statement
+        cursor.execute('''create table if not exists remoteLab1(time Integer, temperature REAL, pressure REAL, Current_Temperature_threshold REAL, Current_Pressure_threshold REAL)''');
+        cursor.execute('''create table if not exists remoteLab2(time Integer, temperature REAL, pressure REAL, Current_Temperature_threshold REAL, Current_Pressure_threshold REAL)''');
 
         #close the connection
         self.dbconnect.close();
 
-    def addToDataBase(self, value):
-        self.dbconnect = sqlite3.connect("test.db");
+    def addToRVL1DB(self,table, time, temperature, pressure, Current_Temperature_threshold, Current_Pressure_threshold):
+        self.dbconnect = sqlite3.connect("RVL.db");
 
         cursor = self.dbconnect.cursor();
-        data = str(value)
-        cursor.execute('''insert into entries values (?)''',(data,));
+        cursor.execute('''insert into remoteLab1 values (?, ?, ?, ?, ?)''',(time, temperature, pressure, Current_Temperature_threshold, Current_Pressure_threshold));
+        self.dbconnect.commit();
+        self.dbconnect.close();
+
+    
+    def addToRVL2DB(self,table, time, temperature, pressure, Current_Temperature_threshold, Current_Pressure_threshold):
+        self.dbconnect = sqlite3.connect("RVL.db");
+
+        cursor = self.dbconnect.cursor();
+        cursor.execute('''insert into remoteLab2 values (?, ?, ?, ?, ?)''',(time, temperature, pressure, Current_Temperature_threshold, Current_Pressure_threshold));
         self.dbconnect.commit();
         self.dbconnect.close();
     
-    def getDBEntriesCnt(self):
-        self.dbconnect = sqlite3.connect("test.db");
-
-        cursor = self.dbconnect.cursor();
-        #execute simple select statement
-        cursor.execute('SELECT * FROM entries');
-        #print data
-        cnt = 0
-        for row in cursor:
-            # print(str(row['temperature']));
-            print(str(row[0]));
-            cnt += 1
-        
-        #close the connection
-        self.dbconnect.close();
-        return cnt
-
-    def clearDB(self):
-        self.dbconnect = sqlite3.connect("test.db");
+    
+    def clearRVLDB(self):
+        self.dbconnect = sqlite3.connect("RVL.db");
 
         cursor = self.dbconnect.cursor();
         # #clear Databases
-        cursor.execute('DELETE FROM entries');
+        cursor.execute('DELETE FROM remoteLab1');
+        cursor.execute('DELETE FROM remoteLab2');
         self.dbconnect.commit()
         self.dbconnect.close();
+
+    def createThresholdDatabase(self):
+        self.dbconnect = sqlite3.connect("Threshold.db");
+        #row_factory to sqlite3.ROw class
+        self.dbconnect.row_factory = sqlite3.Row;
+        #now we create a cursor to work with db
+        cursor = self.dbconnect.cursor();
+        #execute insert statement
+        cursor.execute('''create table if not exists threshold(tempThreshold REAL, pressureThreshold REAL)''');
+
+        #close the connection
+        self.dbconnect.close();
+
+    def addToThresholdDB(self,pressThreshold, tempThreshold):
+        self.dbconnect = sqlite3.connect("Threshold.db");
+
+        cursor = self.dbconnect.cursor();
+        cursor.execute('''insert into threshold values (?, ?)''',(tempThreshold, pressThreshold));
+        self.dbconnect.commit();
+        self.dbconnect.close();
+
+    def clearThresholdDB(self):
+        self.dbconnect = sqlite3.connect("Threshold.db");
+
+        cursor = self.dbconnect.cursor();
+        # #clear Databases
+        cursor.execute('DELETE FROM threshold');
+        self.dbconnect.commit()
+        self.dbconnect.close();
+
+    def createRPLDatabase(self):
+        self.dbconnect = sqlite3.connect("RPL.db");
+        #row_factory to sqlite3.ROw class
+        self.dbconnect.row_factory = sqlite3.Row;
+        #now we create a cursor to work with db
+        cursor = self.dbconnect.cursor();
+        #execute insert statement
+        cursor.execute('''create table if not exists patients(time Integer, name text, age Integer, gender text, temperature REAL, Current_Temperature_threshold REAL)''');
+
+        #close the connection
+        self.dbconnect.close();
+
+    def addToRPLDB(self,time, name, age, gender, temperature, Current_Temperature_threshold):
+        self.dbconnect = sqlite3.connect("RPL.db");
+
+        cursor = self.dbconnect.cursor();
+        cursor.execute('''insert into threshold patients (?, ?, ?, ?, ?, ?)''',(time, name, age, gender, temperature, Current_Temperature_threshold));
+        self.dbconnect.commit();
+        self.dbconnect.close();
+
+    def clearRPLDB(self):
+        self.dbconnect = sqlite3.connect("RPL.db");
+
+        cursor = self.dbconnect.cursor();
+        # #clear Databases
+        cursor.execute('DELETE FROM patients');
+        self.dbconnect.commit()
+        self.dbconnect.close();
+
+    def createDBs(self):
+        self.createRPLDatabase()
+        self.createRVLDatabase()
+        self.createThresholdDatabase()
 
 
     def closeAll(self):

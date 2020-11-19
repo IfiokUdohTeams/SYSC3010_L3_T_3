@@ -8,12 +8,11 @@ import random
 class RemoteVaccineLab(Node.Node):
     def __init__(self, thingSpeak_url, readKey, writeKey):
         super(RemoteVaccineLab, self).__init__(thingSpeak_url, readKey, writeKey,"remoteVaccineLab")
-        self.host = '192.168.0.52'
-        self.port = 8080
+        # self.host = '192.168.0.52'
+        # self.port = 8080
         self.socket = socket.socket()  # instantiate
-        self.socket.connect((self.host, self.port))
-        self.socket.setblocking(0)
-        print("connected!")
+        # self.socket.connect((self.host, self.port))
+        # self.socket.setblocking(0)
         self.recvThread = ""
         self.cond = True
         self.changeTempBy = "0"
@@ -22,7 +21,12 @@ class RemoteVaccineLab(Node.Node):
         self.TempThreshold = "0"
         self.done = False #temp
 
-    # def FormatData(self,data):
+    def ConnectToAndroidApp(self):
+        self.host = '192.168.0.52'
+        self.port = 8080
+        self.socket.connect((self.host, self.port))
+        print("connected!")
+        self.socket.setblocking(0)
 
 
     def process_data(self):

@@ -18,9 +18,22 @@ class RemotePatientLab(Node.Node):
         self.sense = sense_emu.SenseHat()
         self.sense.low_light = True
         self.done = False
+        self.pollNewPatient()
+        self.close = 0
         # sense = sense_hat.SenseHat() 
 
-    
+    def pollNewPatient(self):
+        while self.close != 3:
+            name = input("New Patient name: ")
+            age = input("New Patient age: ")
+            gender = input("New Patient gender: ")
+            print("Processing Patient...")
+            pat = Patient.Patient(name,age,gender)
+            self.newPatient(pat)
+            while self.done == False:
+                pass
+            self.close += 1
+            self.done = False
 
     def process_data(self):
         # print("remotePatientLab READ: ", self.read_data_pointer[0], " from: ", self.read_sender_pointer[0])
@@ -28,7 +41,7 @@ class RemotePatientLab(Node.Node):
         print(a)
         # self.ReadList.append(int(a.encode("ascii"))) # encode read unicode string to ascii and convert to integer
         if(a == "recievedNewPatient"):
-            print("hereRPLrcv")
+            # print("hereRPLrcv")
             self.checkCurrentPatientTemperature()
 
 
@@ -50,11 +63,11 @@ class RemotePatientLab(Node.Node):
         
     def newPatient(self,patient):
         self.currentPatient = patient
-        self.Format_and_Write("headquaters", "name:" + patient.getName() + "," +  "age:" + patient.getAge() + "," 
+        self.Format_and_Write("headquaters","time" "name:" + patient.getName() + "," +  "age:" + patient.getAge() + "," 
         + "gender:" + patient.getGender() + "," + "temperature:" + str(patient.getTemperature()))
 
     def closeAll(self):
-        while self.done != True:
+        while self.close != 3:
             pass
 
         self.close()
