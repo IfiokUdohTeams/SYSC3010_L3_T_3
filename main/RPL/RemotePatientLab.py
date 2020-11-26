@@ -4,6 +4,12 @@
 # name: Zoya Mushtaq
 # description: Remote Patient Lab set up
 import sys
+import os
+import time
+import threading
+import select
+import tty
+import termios
 sys.path.append('..')
 from Communication import Node
 import Patient
@@ -13,26 +19,41 @@ import sense_hat
 class RemotePatientLab(Node.Node):
     def __init__(self, thingSpeak_url, readKey, writeKey):
         super(RemotePatientLab, self).__init__(thingSpeak_url, readKey, writeKey,"remotePatientLab")
-        self.tempThreshold = ""
+        self.tempThreshold = 30.0
         self.currentPatient = Patient.Patient(None,None,None)
         self.sense = sense_emu.SenseHat()
         self.sense.low_light = True
         self.done = False
-        self.pollNewPatient()
-        self.close = 0
+        self.toClose = False
+        self.old_settings = termios.tcgetattr(sys.stdin)
+        self.patientPollThread = threading.Thread(target=self.pollNewPatient,)
+        self.patientPollThread.start()
+        # self.pollNewPatient()
+        
         # sense = sense_hat.SenseHat() 
+        
+
 
     def pollNewPatient(self):
-        while self.close != 3:
-            name = input("New Patient name: ")
-            age = input("New Patient age: ")
-            gender = input("New Patient gender: ")
+        while self.toClose != True:
+            pname = raw_input("New Patient name: ")
+            if pname == "done":
+                self.toClose = True
+                break
+            age = raw_input("New Patient age: ")
+            if age == "done":
+                self.toClose = True
+                break
+            gender = raw_input("New Patient gender: ")
+            if gender == "done":
+                self.toClose = True
+                break
             print("Processing Patient...")
-            pat = Patient.Patient(name,age,gender)
+            pat = Patient.Patient(pname,age,gender)
+            pat.setTemperature(40)
             self.newPatient(pat)
             while self.done == False:
                 pass
-            self.close += 1
             self.done = False
 
     def process_data(self):
@@ -63,13 +84,13 @@ class RemotePatientLab(Node.Node):
         
     def newPatient(self,patient):
         self.currentPatient = patient
-        self.Format_and_Write("headquaters","time" "name:" + patient.getName() + "," +  "age:" + patient.getAge() + "," 
-        + "gender:" + patient.getGender() + "," + "temperature:" + str(patient.getTemperature()))
+        self.Format_and_Write("headquaters","time:" + str(time.time()) + "," + "name:" + patient.getName() + "," +  "age:" + patient.getAge() + "," 
+        + "gender:" + patient.getGender() + "," + "temperature:" + str(patient.getTemperature()) + "," + "Current_Temperature_threshold:" + str(self.tempThreshold))
 
     def closeAll(self):
-        while self.close != 3:
-            pass
-
+        # while self.close != 3:
+        #     pass
+        self.toClose = True
         self.close()
 
 def Alarm():

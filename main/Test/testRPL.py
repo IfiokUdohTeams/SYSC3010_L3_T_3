@@ -12,7 +12,7 @@ def main():
 
     
     remotepatientLab = RemotePatientLab.RemotePatientLab(TSC,readKey, writeKey)
-    remotepatientLab.tempThreshold = 30
+    # remotepatientLab.tempThreshold = 30
 
     def signal_handler(sig, frame):
         print('You pressed Ctrl+C!')

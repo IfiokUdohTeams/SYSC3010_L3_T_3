@@ -48,7 +48,7 @@ class Headquaters(Node.Node):
             data = rawdata.split(",")
             print(data)
             
-            time                                    = int(data[0].split(":")[1])
+            time                                    = float(data[0].split(":")[1])
             self.vaccineLabTemp                     = float(data[1].split(":")[1])
             self.vaccineLabPress                    = float(data[2].split(":")[1])
             Current_Temperature_threshold           = float(data[3].split(":")[1])
@@ -64,7 +64,7 @@ class Headquaters(Node.Node):
             data = rawdata.split(",")
             print(data)
 
-            time                                    = int(data[0].split(":")[1])
+            time                                    = float(data[0].split(":")[1])
             self.vaccineLabTemp                     = float(data[1].split(":")[1])
             self.vaccineLabPress                    = float(data[2].split(":")[1])
             Current_Temperature_threshold           = float(data[3].split(":")[1])
@@ -84,14 +84,12 @@ class Headquaters(Node.Node):
                 if self.ReadCnt == 9:
                     self.done = True
             else:
-                time                                    = int(data[0].split(":")[1])
+                time                                    = float(data[0].split(":")[1])
                 name                                    = data[1].split(":")[1]
                 age                                     = int(data[2].split(":")[1])
                 gender                                  = data[3].split(":")[1]
                 self.patientTemp                        = float(data[4].split(":")[1])
                 Current_Temperature_threshold           = float(data[5].split(":")[1])
-                self.writeToPatientDatabase()
-                self.writeToThresholdDatabase()
                 self.Format_and_Write("remotePatientLab", "recievedNewPatient")
                 self.addToRPLDB(time, name, age, gender, self.patientTemp, Current_Temperature_threshold)
 
@@ -130,8 +128,8 @@ class Headquaters(Node.Node):
         #now we create a cursor to work with db
         cursor = self.dbconnect.cursor();
         #execute insert statement
-        cursor.execute('''create table if not exists remoteLab1(time Integer, temperature REAL, pressure REAL, Current_Temperature_threshold REAL, Current_Pressure_threshold REAL)''');
-        cursor.execute('''create table if not exists remoteLab2(time Integer, temperature REAL, pressure REAL, Current_Temperature_threshold REAL, Current_Pressure_threshold REAL)''');
+        cursor.execute('''create table if not exists remoteLab1(time REAL, temperature REAL, pressure REAL, Current_Temperature_threshold REAL, Current_Pressure_threshold REAL)''');
+        cursor.execute('''create table if not exists remoteLab2(time REAL, temperature REAL, pressure REAL, Current_Temperature_threshold REAL, Current_Pressure_threshold REAL)''');
 
         #close the connection
         self.dbconnect.close();
@@ -200,7 +198,7 @@ class Headquaters(Node.Node):
         #now we create a cursor to work with db
         cursor = self.dbconnect.cursor();
         #execute insert statement
-        cursor.execute('''create table if not exists patients(time Integer, name text, age Integer, gender text, temperature REAL, Current_Temperature_threshold REAL)''');
+        cursor.execute('''create table if not exists patients(time REAL, name text, age Integer, gender text, temperature REAL, Current_Temperature_threshold REAL)''');
 
         #close the connection
         self.dbconnect.close();
@@ -209,7 +207,7 @@ class Headquaters(Node.Node):
         self.dbconnect = sqlite3.connect("RPL.db");
 
         cursor = self.dbconnect.cursor();
-        cursor.execute('''insert into threshold patients (?, ?, ?, ?, ?, ?)''',(time, name, age, gender, temperature, Current_Temperature_threshold));
+        cursor.execute('''insert into patients values (?, ?, ?, ?, ?, ?)''',(time, name, age, gender, temperature, Current_Temperature_threshold));
         self.dbconnect.commit();
         self.dbconnect.close();
 
