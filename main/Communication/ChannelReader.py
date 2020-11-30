@@ -49,7 +49,7 @@ class ChannelReader:
     def writeToEntries(self):
         f = open(self.node_id + "Entries", 'w')
         f.truncate(0)
-        print("Entries is: " + str(self.entries))
+        # print("Entries is: " + str(self.entries))
         f.write(str(self.entries))
         f.close()
 

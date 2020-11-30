@@ -2,7 +2,7 @@ import time
 import sys
 import signal
 sys.path.append('..')
-from RPL import RemotePatientLab
+from RVL import RemoteVaccineLab
 
 def main():
         # Initialize nodes in communication path
@@ -11,12 +11,13 @@ def main():
     writeKey = "OEGCYO9F8FJCZGO6"
 
     print('type done, Press Enter then Press Ctrl+C to exit Program')
-    remotepatientLab = RemotePatientLab.RemotePatientLab(TSC,readKey, writeKey)
+    remoteVaccineLab = RemoteVaccineLab.RemoteVaccineLab(TSC,readKey, writeKey)
+    # remoteVaccineLab.ConnectToAndroidApp()
     # remotepatientLab.tempThreshold = 30
 
     def signal_handler(sig, frame):
         print('You pressed Ctrl+C!')
-        remotepatientLab.closeAll()
+        remoteVaccineLab.closeAll()
         sys.exit(0)
 
     signal.signal(signal.SIGINT, signal_handler)

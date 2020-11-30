@@ -14,12 +14,13 @@ def main():
 
   
     headquaters = Headquaters.Headquaters(TSC,readKey, writeKey)
+    headquaters.ConnectToAndroidApp()
     def signal_handler(sig, frame):
         print('You pressed Ctrl+C!')
         headquaters.closeAll()
         sys.exit(0)
     signal.signal(signal.SIGINT, signal_handler)
-    print('Press Ctrl+C')
+    print('Press Ctrl+C to exit Program')
     signal.pause()
 
 if __name__ == "__main__":

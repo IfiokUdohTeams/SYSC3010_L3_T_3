@@ -27,11 +27,12 @@ class Headquaters(Node.Node):
 
 
     def ConnectToAndroidApp(self):
-        self.host = '192.168.0.52'
+        self.host = '192.168.0.57'
         self.port = 8080
         self.socket.connect((self.host, self.port))
         print("connected!")
         self.socket.setblocking(0)
+        self.app_client()
 
     def process_data(self):
         if(self.pressThreshold != "" and self.tempThreshold != ""):
@@ -62,7 +63,7 @@ class Headquaters(Node.Node):
             print("headquaters READ: ", self.read_data_pointer[0].encode("ascii"), " from: ", self.read_sender_pointer[0])
             rawdata = self.read_data_pointer[0]
             data = rawdata.split(",")
-            print(data)
+            # print(data)
 
             time                                    = float(data[0].split(":")[1])
             self.vaccineLabTemp                     = float(data[1].split(":")[1])
@@ -134,7 +135,7 @@ class Headquaters(Node.Node):
         #close the connection
         self.dbconnect.close();
 
-    def addToRVL1DB(self,table, time, temperature, pressure, Current_Temperature_threshold, Current_Pressure_threshold):
+    def addToRVL1DB(self, time, temperature, pressure, Current_Temperature_threshold, Current_Pressure_threshold):
         self.dbconnect = sqlite3.connect("RVL.db");
 
         cursor = self.dbconnect.cursor();
@@ -143,7 +144,7 @@ class Headquaters(Node.Node):
         self.dbconnect.close();
 
     
-    def addToRVL2DB(self,table, time, temperature, pressure, Current_Temperature_threshold, Current_Pressure_threshold):
+    def addToRVL2DB(self, time, temperature, pressure, Current_Temperature_threshold, Current_Pressure_threshold):
         self.dbconnect = sqlite3.connect("RVL.db");
 
         cursor = self.dbconnect.cursor();
