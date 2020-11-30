@@ -104,6 +104,7 @@ class Headquaters(Node.Node):
             
             if rawdata != "":
                 data = rawdata.split(",")
+                rawdata = ""
                 print(data)
                 opcode = data[0]
                 if opcode == "S":

@@ -25,7 +25,7 @@ class RemoteVaccineLab(Node.Node):
         self.TempThreshold      = 0
         self.currentTemperature = 0
         self.currentPressure    = 0
-        # self.pollTempandPressure(5.0)
+        self.pollTempandPressure(5.0)
         self.done               = False #temp
 
     def ConnectToAndroidApp(self):
@@ -76,8 +76,17 @@ class RemoteVaccineLab(Node.Node):
                 opcode = data[0]
                 if opcode == "R":
                     print("here")
-                    self.changeTempBy = self.currentTemperature - self.TempThreshold
-                    self.changePressBy = self.currentPressure - self.PressureThreshold
+                    diffTemp = self.currentTemperature - self.TempThreshold
+                    diffPress = self.currentPressure - self.PressureThreshold
+                    if diffTemp > 0:
+                        self.changeTempBy = "-" + str(diffTemp)
+                    else:
+                        self.changeTempBy = "+" + str(diffTemp)
+                    if diffPress > 0:
+                        self.changePressBy = "-" + str(diffPress)
+                    else:
+                        self.changePressBy = "+" + str(diffPress) 
+                
                     self.socket.send("changeTempBy:" + str(self.changeTempBy) + "," + "changePressBy:" +
                     str(self.changePressBy) +"," + "PressureThreshold:" + str(self.PressureThreshold) +"," + "TempThreshold:" + str(self.TempThreshold) + "\n")
                     print("sent")
