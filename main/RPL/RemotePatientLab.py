@@ -21,7 +21,8 @@ class RemotePatientLab(Node.Node):
         super(RemotePatientLab, self).__init__(thingSpeak_url, readKey, writeKey,"remotePatientLab")
         self.tempThreshold = 30.0
         self.currentPatient = Patient.Patient(None,None,None)
-        self.sense = sense_emu.SenseHat()
+        # self.sense = sense_emu.SenseHat()
+        self.sense              = sense_hat.SenseHat()
         self.sense.low_light = True
         self.done = False
         self.toClose = False
@@ -36,6 +37,7 @@ class RemotePatientLab(Node.Node):
 
     def pollNewPatient(self):
         while self.toClose != True:
+            print("")
             pname = raw_input("New Patient name: ")
             if pname == "done":
                 self.toClose = True
@@ -49,6 +51,7 @@ class RemotePatientLab(Node.Node):
                 self.toClose = True
                 break
             print("Processing Patient...")
+            print("")
             pat = Patient.Patient(pname,age,gender)
             pat.setTemperature(40)
             self.newPatient(pat)
@@ -57,9 +60,9 @@ class RemotePatientLab(Node.Node):
             self.done = False
 
     def process_data(self):
-        # print("remotePatientLab READ: ", self.read_data_pointer[0], " from: ", self.read_sender_pointer[0])
+        print("remotePatientLab READ: " + self.read_data_pointer[0] + " from: " + self.read_sender_pointer[0])
         a =  self.read_data_pointer[0]
-        print(a)
+        # print(a)
         # self.ReadList.append(int(a.encode("ascii"))) # encode read unicode string to ascii and convert to integer
         if(a == "recievedNewPatient"):
             # print("hereRPLrcv")
@@ -68,7 +71,7 @@ class RemotePatientLab(Node.Node):
 
     def checkCurrentPatientTemperature(self):
         if self.currentPatient.getTemperature() > self.tempThreshold:
-            print("in comparison")
+            print("Current patient Temperature Above threshold.... \nPlease Push middle button on SenseHat to Continue")
             self.sense.set_pixels(Alarm())
             cond = True
             while cond:
@@ -76,7 +79,7 @@ class RemotePatientLab(Node.Node):
                 if events:
                     for event in events:
                         if event.action == 'pressed' and event.direction == 'middle':
-                            print("pressed middle")
+                            print("pressed middle button")
                             self.sense.clear()
                             cond = False
                             self.done = True
