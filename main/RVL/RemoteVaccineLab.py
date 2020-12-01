@@ -25,7 +25,7 @@ class RemoteVaccineLab(Node.Node):
         self.TempThreshold      = 0
         self.currentTemperature = 0
         self.currentPressure    = 0
-        self.pollTempandPressure(5.0)
+        self.pollTempandPressure(30.0)
         self.done               = False #temp
 
     def ConnectToAndroidApp(self):
@@ -48,12 +48,14 @@ class RemoteVaccineLab(Node.Node):
         self.currentTemperature = round(self.sense.get_temperature()) #fxn get_temperature will give value measured by sense hat in degress celcuis whihc will be stored in temp variable 
         message = ' T=%dC ' %(self.currentTemperature) #store temp, with a specific notation in "message" string 
         self.sense.show_message(message, scroll_speed=(0.08), text_colour=[200,240,200], back_colour=[0, 0, 0]) #call in which i can send any message to my sense hat display screen. passing message string
+        time.sleep(4)
 
     def read_Pressure(self): 
 		self.currentPressure = round(self.sense.get_pressure())   
 		message = 'P=%d ' %(self.currentPressure) #store pressure,  with a specific notation in "message" string 
 		self.sense.show_message(message, scroll_speed=(0.08), text_colour=[200,240,200], back_colour=[0, 0, 0]) #call in which i can send any message to my sense hat display screen. passing message string
-	
+        time.sleep(4)
+        
     def pollTempandPressure(self, refreshTime):
         self.pollThread = threading.Timer(refreshTime, self.pollTempandPressure, (refreshTime,) )
         self.pollThread.start()
