@@ -11,9 +11,9 @@ def main():
     TSC = 'https://api.thingspeak.com/channels/1161330/feeds.json?'
     readKey = '0'
     writeKey = "OEGCYO9F8FJCZGO6"
-
+    host = "192.168.0.57"
   
-    headquaters = Headquaters.Headquaters(TSC,readKey, writeKey)
+    headquaters = Headquaters.Headquaters(TSC,readKey, writeKey, host)
     headquaters.ConnectToAndroidApp()
     def signal_handler(sig, frame):
         print('You pressed Ctrl+C!')

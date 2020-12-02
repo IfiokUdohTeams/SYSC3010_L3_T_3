@@ -15,26 +15,24 @@ from Communication import Node
 import Patient
 import sense_emu
 import sense_hat
+import cleanup
 
 class RemotePatientLab(Node.Node):
-    def __init__(self, thingSpeak_url, readKey, writeKey):
+    def __init__(self, thingSpeak_url, readKey, writeKey, sense):
         super(RemotePatientLab, self).__init__(thingSpeak_url, readKey, writeKey,"remotePatientLab")
         self.tempThreshold = 30.0
         self.currentPatient = Patient.Patient(None,None,None)
-        # self.sense = sense_emu.SenseHat()
-        self.sense              = sense_hat.SenseHat()
+        if sense == "emu":
+            self.sense              = sense_emu.SenseHat() #senseHat Emulator
+        else:
+            self.sense              = sense_hat.SenseHat() #senseHat Hardware
         self.sense.low_light = True
         self.done = False
         self.toClose = False
         self.old_settings = termios.tcgetattr(sys.stdin)
         self.patientPollThread = threading.Thread(target=self.pollNewPatient,)
         self.patientPollThread.start()
-        # self.pollNewPatient()
         
-        # sense = sense_hat.SenseHat() 
-        
-
-
     def pollNewPatient(self):
         while self.toClose != True:
             print("")
@@ -50,7 +48,7 @@ class RemotePatientLab(Node.Node):
             if gender == "done":
                 self.toClose = True
                 break
-            print("Processing Patient...")
+            print("Processing Patient...Please Wait")
             print("")
             pat = Patient.Patient(pname,age,gender)
             pat.setTemperature(40)
@@ -60,11 +58,12 @@ class RemotePatientLab(Node.Node):
             self.done = False
 
     def process_data(self):
-        print("remotePatientLab READ: " + self.read_data_pointer[0] + " from: " + self.read_sender_pointer[0])
-        a =  self.read_data_pointer[0]
-        # print(a)
-        # self.ReadList.append(int(a.encode("ascii"))) # encode read unicode string to ascii and convert to integer
-        if(a == "recievedNewPatient"):
+        # print("remotePatientLab READ: " + self.read_data_pointer[0] + " from: " + self.read_sender_pointer[0])
+        if self.read_data_pointer[0] == "cleanup":
+            cleanup.cleanup()
+            self.closeAll()
+            
+        elif(self.read_data_pointer[0] == "recievedNewPatient"):
             # print("hereRPLrcv")
             self.checkCurrentPatientTemperature()
 
@@ -79,7 +78,7 @@ class RemotePatientLab(Node.Node):
                 if events:
                     for event in events:
                         if event.action == 'pressed' and event.direction == 'middle':
-                            print("pressed middle button")
+                            print("pressed middle button on SenseHat!")
                             self.sense.clear()
                             cond = False
                             self.done = True
@@ -91,8 +90,6 @@ class RemotePatientLab(Node.Node):
         + "gender:" + patient.getGender() + "," + "temperature:" + str(patient.getTemperature()) + "," + "Current_Temperature_threshold:" + str(self.tempThreshold))
 
     def closeAll(self):
-        # while self.close != 3:
-        #     pass
         self.toClose = True
         self.close()
 

@@ -12,7 +12,7 @@ def main():
 
     print('type done, Press Enter then Press Ctrl+C to exit Program')
     remoteVaccineLab = RemoteVaccineLab.RemoteVaccineLab(TSC,readKey, writeKey)
-    remoteVaccineLab.ConnectToAndroidApp()
+    # remoteVaccineLab.ConnectToAndroidApp()
     # remotepatientLab.tempThreshold = 30
 
     def signal_handler(sig, frame):
