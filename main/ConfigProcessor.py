@@ -18,8 +18,9 @@ class ConfigProcessor:
         for i in raw:
             if i != '':
                 line = i.split(';')[0].replace(" ", "")
-                key = line.split("=")[0]
-                value = line.split("=")[1]
+                slitline = line.split("=")
+                key = slitline[0]
+                value = slitline[1]
                 if key == "Node":
                     self.node = value
                 elif key == "RemoteVaccineLabNo":

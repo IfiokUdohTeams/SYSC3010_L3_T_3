@@ -1,6 +1,6 @@
 Node = headquaters; # node name for location i.e. headquaters, remoteVaccineLab, remotePatientLab
 
-RemoteVaccineLabNo = 1; #REmote vaccine Lab number
+RemoteVaccineLabNo = 1; #REmote vaccine Lab number 1 or 2
 
 AndroidAppIpAddress = 192.168.0.57; #IP address of android device
 
@@ -12,5 +12,5 @@ readKey = 0; #read key for ThingspeakChannel
 
 writeKey = OEGCYO9F8FJCZGO6; #write key for ThingspeakChannel
 
-sense = emu; #emu for emulator hat for hardware
+sense = emu; #emu for emulator, hat for hardware
 
