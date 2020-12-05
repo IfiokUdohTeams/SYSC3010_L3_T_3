@@ -1,3 +1,7 @@
+'''
+Authors: Zoya Mushtaq, Ifiok Udoh
+
+'''
 import sys
 sys.path.append('..')
 from Communication import Node

@@ -1,3 +1,7 @@
+'''
+Authors: Harshil Verma, Linpu Liu, Ifiok Udoh
+
+'''
 import sys
 sys.path.append('..')
 from Communication import Node
@@ -6,13 +10,14 @@ import threading
 import sqlite3
 import cleanup
 
+#Headquaters class a subclass of Node
 class Headquaters(Node.Node):
     def __init__(self, thingSpeak_url, readKey, writeKey, host):
         self.createDBs()
         super(Headquaters, self).__init__(thingSpeak_url, readKey, writeKey,"headquaters")
         self.socket = socket.socket()  # instantiate socket for connecting to Android APP
-        self.port = 8080
-        self.host = host
+        self.port = 8080 #Port number for android app socket
+        self.host = host #Ipaddress for android device
         self.recvThread = ""
         self.cond = True
         self.pressThreshold = ""
@@ -25,7 +30,7 @@ class Headquaters(Node.Node):
         self.ReadCnt = 0
         self.dbconnect = ""
 
-
+    #initialixes and connects Socket to Android APP
     def ConnectToAndroidApp(self):
         try:
             self.socket.connect((self.host, self.port))
@@ -36,12 +41,12 @@ class Headquaters(Node.Node):
             self.socket.setblocking(0)
             self.app_client()
 
+    #Overwites Node Process_data Processes gotten data
     def process_data(self):
         if self.read_data_pointer[0] == "cleanup":
             print("got cleanup message")
             cleanup.cleanup()
             self.closeAll()
-            # quit()
 
         if(self.pressThreshold != "" and self.tempThreshold != ""):
             print("headquaters READ: " +  self.pressThreshold + " " + self.tempThreshold + " from: Android APP")
@@ -103,7 +108,7 @@ class Headquaters(Node.Node):
                 self.addToRPLDB(time, name, age, gender, self.patientTemp, Current_Temperature_threshold)
 
             
-
+    #REcieves messages from connected Anroid app socket
     def RcvAppData(self):
         rawdata = ""
         while(self.cond):
@@ -128,6 +133,7 @@ class Headquaters(Node.Node):
         self.recvThread = threading.Thread(target=self.RcvAppData,)
         self.recvThread.start()
 
+    #Closes connection to connected android app socket
     def app_clientClose(self):
         self.socket.close()
         self.cond = False

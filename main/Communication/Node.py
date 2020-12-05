@@ -12,6 +12,7 @@ import time
 import requests
 import json
 
+#Base node class for remote locations
 class Node(object):
     def __init__(self, thingSpeak_url, readKey, writeKey, node_id):
         self.writeKey = writeKey
@@ -26,7 +27,7 @@ class Node(object):
         self.read_sender_pointer = pointer(c_wchar_p(""))
         self.write_data = ''
         self.channelReader = ChannelReader.ChannelReader(thingSpeak_url, self.readKey, self.node_id, 
-                                                        self.read_data_pointer, self.read_sender_pointer, self.mutex)
+                                                        self.read_data_pointer, self.read_sender_pointer, self.mutex)#channel reader object for writing and reading from TSC
 
         self.channelReader.poll()
         self.Process()
@@ -48,6 +49,7 @@ class Node(object):
                 self.read_data_pointer[0] = ""
             self.mutex.release()
 
+    # Thread used to read from TSC
     def Process(self):
         self.processThread = threading.Thread(target=self.synchronize,)
         self.processThread.start()
@@ -81,17 +83,11 @@ class Node(object):
         while(self.write() == '0'):
             time.sleep(5)
         
-        
+    #used to stop and close all runnning threads
     def close(self):
         self.run = False
         self.channelReader.close()
 
-
-# hq = Node('https://api.thingspeak.com/channels/1161330/feeds.json?',0, "OEGCYO9F8FJCZGO6", 'headquaters')
-
-# hq.Format_and_Write("headquaters", "testing1")
-
-# hq.Format_and_Write("headquaters", "testing2")
 
 
         

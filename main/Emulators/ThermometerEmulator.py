@@ -1,14 +1,10 @@
+'''
+Author: Ifiok Udoh
+
+'''
 import ThermalSensor
 
+#Class for thermal Camera Emulator
 class ThermometerEmulator(ThermalSensor.ThermalSensor):
     def __init__(self):
         super(ThermometerEmulator, self).__init__(17,25)
-
-# def main():
-#     thermo = ThermometerEmulator()
-#     print("here")
-#     print(thermo.read())
-#     thermo.close()
-
-# if __name__ == "__main__":
-#     main()

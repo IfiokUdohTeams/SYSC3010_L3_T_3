@@ -1,8 +1,7 @@
-# COVID-19 Lab Simulation
-# Remote Patient Lab
-# date: Nov 12 2020
-# name: Zoya Mushtaq
-# description: Remote Patient Lab set up
+'''
+Authors: Zoya Mushtaq
+
+'''
 class Patient:
 
     def __init__(self,name,Age,gender):

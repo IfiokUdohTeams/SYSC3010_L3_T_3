@@ -1,3 +1,8 @@
+'''
+main.py initializes and runs system based off pareameters in config.txt
+Authors: Ifiok Udoh
+
+'''
 import sys
 import signal
 import ConfigProcessor

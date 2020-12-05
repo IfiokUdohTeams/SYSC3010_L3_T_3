@@ -1,6 +1,10 @@
+'''
+Authors: Ifiok Udoh
+
+'''
 class ConfigProcessor:
     def __init__(self):
-        self.configFile                 = "config.txt"
+        self.configFile                 = "config.txt" #config file
         self.node                       = None
         self.RemoteVaccineLabNo         = None
         self.AndroidAppIpAddress        = None

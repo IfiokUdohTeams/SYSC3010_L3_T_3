@@ -1,8 +1,7 @@
-# COVID-19 Lab Simulation
-# Remote Patient Lab
-# date: Nov 12 2020
-# name: Zoya Mushtaq
-# description: Remote Patient Lab set up
+'''
+Authors: Zoya Mushtaq, Ifiok Udoh
+
+'''
 import sys
 import os
 import time
@@ -17,6 +16,7 @@ import sense_emu
 import sense_hat
 import cleanup
 
+#Class remote patientlab subclass of Node
 class RemotePatientLab(Node.Node):
     def __init__(self, thingSpeak_url, readKey, writeKey, sense):
         super(RemotePatientLab, self).__init__(thingSpeak_url, readKey, writeKey,"remotePatientLab")
@@ -32,7 +32,8 @@ class RemotePatientLab(Node.Node):
         self.old_settings = termios.tcgetattr(sys.stdin)
         self.patientPollThread = threading.Thread(target=self.pollNewPatient,)
         self.patientPollThread.start()
-        
+
+    #Polls patient information from terminal   
     def pollNewPatient(self):
         while self.toClose != True:
             print("")
