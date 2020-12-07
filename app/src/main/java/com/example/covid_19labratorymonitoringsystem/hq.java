@@ -1,5 +1,9 @@
 package com.example.covid_19labratorymonitoringsystem;
-
+/**
+ * @author Ifiok Udoh
+ * @author Zoya Mushtaq
+ *
+ */
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
@@ -25,9 +29,6 @@ public class hq extends AppCompatActivity {
 
 
         //When you click the button, the temeprature and pressure values should be dispalyed in the correct inputs of lab1 and lab2 classes
-        //button id= submit
-        //TextEdit for pressure id = HQ_P_Threshold
-        //TextEdit for temperature id= HQ_T_Threshold
 
         submit = findViewById(R.id.submit);
         HQ_pressure = findViewById(R.id.HQ_P_Threshold);
