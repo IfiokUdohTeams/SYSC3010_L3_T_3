@@ -1,4 +1,9 @@
 package com.example.covid_19labratorymonitoringsystem;
+/**
+ * @author Ifiok Udoh
+ * @author Zoya Mushtaq
+ *
+ */
 
 import androidx.appcompat.app.AppCompatActivity;
 
