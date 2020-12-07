@@ -1,4 +1,8 @@
 package com.example.covid_19labratorymonitoringsystem;
+/**
+ * @author Ifiok Udoh
+ *
+ */
 
 import android.app.Notification;
 import android.app.NotificationManager;
